@@ -1,0 +1,24 @@
+package com.example.agendahorario;
+
+public class Agendamento {
+    private String data;
+    private String horario;
+
+    public Agendamento(String data, String horario) {
+        this.data = data;
+        this.horario = horario;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    @Override
+    public String toString() {
+        return "Data: " + data + ", Horário: " + horario;
+    }
+}
