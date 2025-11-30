@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="8dp"
-                        android:text="Campo de Areia 1"
+                        android:text="Arsiper Areia"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
 
@@ -115,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="8dp"
-                        android:text="Campo de Areia 2"
+                        android:text="AERO Areia"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
             </LinearLayout>
@@ -156,7 +156,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="8dp"
-                        android:text="Campo 1"
+                        android:text="Bola de Ouro"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
 
@@ -188,7 +188,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="8dp"
-                        android:text="Campo 2"
+                        android:text="Arsiper Society"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
             </LinearLayout>
@@ -229,7 +229,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="8dp"
-                        android:text="Campo 3"
+                        android:text="Arena Binho"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
 
@@ -261,7 +261,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="8dp"
-                        android:text="Campo 4"
+                        android:text="SESI"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
             </LinearLayout>
@@ -302,7 +302,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="8dp"
-                        android:text="Campo Futebol"
+                        android:text="Guarani Campo"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
 
@@ -334,7 +334,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="8dp"
-                        android:text="Campo Futebol 2"
+                        android:text="AERO Campo"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
             </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.agendahorario;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -10,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.agendahorario.network.ApiClient;
 import com.example.agendahorario.network.ApiService;
-import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +34,7 @@ public class cadastrar_activity extends AppCompatActivity {
         buttonCadastrar = findViewById(R.id.buttonCadastrar);
 
         // Inicializar API service uma única vez
-        apiService = ApiClient.getApiService();
+        apiService = ApiClient.getApiService(this);
 
         buttonCadastrar.setOnClickListener(v -> registerUser());
     }
