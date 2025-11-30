@@ -1,9 +1,11 @@
 package com.example.agendahorario;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,58 +19,75 @@ import retrofit2.Response;
 
 public class login_activity extends AppCompatActivity {
 
-    private EditText emailInput;
-    private EditText passwordInput;
-    private Button loginBtn;
-    private Button registerBtn;
+    private EditText campoEmail;
+    private EditText campoSenha;
+    private Button botaoLogin;
+    private TextView linkCadastro; // Alterado de Button para TextView para corresponder ao seu layout anterior
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        Button loginButton = findViewById(R.id.buttonLogin);
 
-        emailInput = findViewById(R.id.editTextEmail);
-        passwordInput = findViewById(R.id.editTextEmail);
-        loginBtn = findViewById(R.id.buttonLogin);
 
-        loginBtn.setOnClickListener(v -> {
-            String email = emailInput.getText().toString().trim();
-            String password = passwordInput.getText().toString().trim();
+        // Correção: IDs corretos para cada campo
+        campoEmail = findViewById(R.id.editTextEmail);
+        campoSenha = findViewById(R.id.editTextPassword); // ID da senha corrigido
+        botaoLogin = findViewById(R.id.buttonLogin);
+        linkCadastro = findViewById(R.id.textViewCadastro); // ID do texto/link de cadastro
 
-            if (email.isEmpty() || password.isEmpty()) {
+        botaoLogin.setOnClickListener(v -> {
+            String email = campoEmail.getText().toString().trim();
+            String senha = campoSenha.getText().toString().trim();
+
+            if (email.isEmpty() || senha.isEmpty()) {
                 Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            performLogin(email, password);
+            executarLogin(email, senha);
         });
 
-        registerBtn.setOnClickListener(v -> {
+        linkCadastro.setOnClickListener(v -> {
             startActivity(new Intent(this, cadastrar_activity.class));
         });
     }
 
-    private void performLogin(String email, String password) {
-        ApiService apiService = ApiClient.getApiService();
-        LoginBody loginBody = new LoginBody(email, password);
+    private void executarLogin(String email, String senha) {
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+        LoginBody corpoLogin = new LoginBody(email, senha);
 
-        Call<User> call = apiService.login(loginBody);
+        Call<User> chamada = apiService.login(corpoLogin);
 
-        call.enqueue(new Callback<User>() {
+        chamada.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    User user = response.body();
+                    User usuario = response.body();
+
+                    String token = usuario.getApi_token();
+
+                    if (token != null && !token.isEmpty()) {
+                        // salvar token e id antes de abrir MainActivity
+                        SharedPreferences prefs = getApplicationContext()
+                                .getSharedPreferences("agendahorario", MODE_PRIVATE);
+                        prefs.edit()
+                                .putString("api_token", token)
+                                .putInt("user_id", usuario.getId())
+                                .putString("user_name", usuario.getName())
+                                .apply();
+                    }
+
                     Toast.makeText(login_activity.this,
-                            "Bem-vindo " + user.getName(),
+                            "Bem-vindo " + (usuario.getName() != null ? usuario.getName() : ""),
                             Toast.LENGTH_SHORT).show();
 
-                    // Salve o ID do usuário em SharedPreferences ou intent
+                    // agora inicia a MainActivity
                     Intent intent = new Intent(login_activity.this, MainActivity.class);
-                    intent.putExtra("user_id", user.getId());
-                    intent.putExtra("user_name", user.getName());
                     startActivity(intent);
                     finish();
+
                 } else {
                     Toast.makeText(login_activity.this,
                             "Email ou senha inválidos",
@@ -79,7 +98,7 @@ public class login_activity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Toast.makeText(login_activity.this,
-                        "Erro: " + t.getMessage(),
+                        "Erro de conexão: " + t.getMessage(),
                         Toast.LENGTH_SHORT).show();
             }
         });

@@ -11,7 +11,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+
 public class MainActivity extends AppCompatActivity {
+
+    public static final String EXTRA_COURT_ID = "court_id";
 
     public static final String EXTRA_LOCAL = "EXTRA_LOCAL";
 

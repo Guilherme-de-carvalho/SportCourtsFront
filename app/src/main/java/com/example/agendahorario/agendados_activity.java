@@ -2,6 +2,7 @@ package com.example.agendahorario;
 
 import android.os.Bundle;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +21,7 @@ public class agendados_activity extends AppCompatActivity {
 
     private RecyclerView recyclerViewAgendamentos;
     private AgendamentoAdapter agendamentoAdapter;
-    private List<Agendamento> agendamentos = new ArrayList<>();
+    private final List<Agendamento> agendamentos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +38,9 @@ public class agendados_activity extends AppCompatActivity {
     }
 
     private void fetchAgendamentos() {
-        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        ApiService apiService = ApiClient.getApiService(this);
+        Call<List<Agendamento>> call = apiService.getMyReservations(true);
 
-        Call<List<Agendamento>> call = apiService.getAgendamentos();
         call.enqueue(new Callback<List<Agendamento>>() {
             @Override
             public void onResponse(Call<List<Agendamento>> call, Response<List<Agendamento>> response) {

@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AgendaHorario">
+        android:theme="@style/Theme.AgendaHorario"
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name=".login_activity"
