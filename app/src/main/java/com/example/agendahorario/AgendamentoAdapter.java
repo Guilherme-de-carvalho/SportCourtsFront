@@ -48,7 +48,6 @@ public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.
     public void onBindViewHolder(@NonNull AgendamentoViewHolder holder, int position) {
         Agendamento a = agendamentos.get(position);
 
-        // Preenche os dados
         String local = (a.getCourt_name() != null && !a.getCourt_name().isEmpty())
                 ? a.getCourt_name()
                 : "Quadra " + a.getCourt_id();
@@ -56,20 +55,17 @@ public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.
         holder.textViewData.setText(formatDateSafe(a.getStart_datetime()));
         holder.textViewHorario.setText(formatIntervalSafe(a.getStart_datetime(), a.getEnd_datetime()));
 
-        // Lógica para expandir/recolher o menu de cancelamento
         holder.itemView.setOnClickListener(v -> {
             boolean isVisible = holder.cancelLayout.getVisibility() == View.VISIBLE;
             holder.cancelLayout.setVisibility(isVisible ? View.GONE : View.VISIBLE);
         });
 
-        // Lógica do botão cancelar com diálogo de confirmação
         holder.buttonCancelar.setOnClickListener(v -> {
             Context context = holder.itemView.getContext();
             new AlertDialog.Builder(context)
                 .setTitle("Confirmar Cancelamento")
                 .setMessage("Tem certeza que deseja cancelar este agendamento?")
                 .setPositiveButton("Sim", (dialog, which) -> {
-                    // Lógica de cancelamento movida para cá
                     int currentPosition = holder.getAdapterPosition();
                     if (currentPosition == RecyclerView.NO_POSITION) return;
 
